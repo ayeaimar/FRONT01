@@ -14,6 +14,7 @@ import Checkout from './Pages/Checkout'
 import PaymentSuccess from './Pages/PaymentSuccess'
 import PaymentFailure from './Pages/PaymentFailure'
 import PaymentPending from './Pages/PaymentPending'
+import Profile from './Pages/Profile'
 function App() {
     return (
         <UserContextProviver>
@@ -24,6 +25,7 @@ function App() {
                             <Route path="/" element={<Home />} />
                             <Route path="/register" element={<Register />} />
                             <Route path="/login" element={<Login />} />
+                            <Route path="/profile" element={<Profile />} />
                             <Route
                                 path="/detailProduct/:id"
                                 element={<DetailProduct />}

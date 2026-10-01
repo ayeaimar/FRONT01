@@ -7,8 +7,8 @@ const Navbar = () => {
     const { loading, userInfo } = useUser()
 
     return (
-        <header>
-            <AuthButtons />
+        <header className="relative z-50">
+            {!loading && !userInfo?.id && <AuthButtons />}
             <nav className="navbar bg-base-100 shadow-sm lg:rounded-box w-full">
                 <div className="navbar-start">
                     <Link className="btn btn-ghost text-xl" to="/">

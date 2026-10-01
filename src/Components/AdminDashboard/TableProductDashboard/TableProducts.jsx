@@ -1,6 +1,7 @@
 import { Link } from 'react-router'
 import { useProduct } from '../../../Context/ProductContext'
 import toast from 'react-hot-toast'
+import FormattedPrice from '../../FormattedPrice/FormattedPrice'
 
 const TableProducts = ({ products }) => {
     const { deleteProduct } = useProduct()
@@ -24,6 +25,7 @@ const TableProducts = ({ products }) => {
                     <th></th>
                     <th>Name</th>
                     <th>Description</th>
+                    <th>Category</th>
                     <th>Price</th>
                     <th>Stock</th>
                     <th>Image</th>
@@ -37,7 +39,10 @@ const TableProducts = ({ products }) => {
                         <th>{index + 1}</th>
                         <td>{product.name}</td>
                         <td>{product.description}</td>
-                        <td>{product.price}</td>
+                        <td>{product.category || 'Taza'}</td>
+                        <td>
+                            <FormattedPrice price={product.price} />
+                        </td>
                         <td>{product.stock}</td>
                         <td>{product.imageUrl}</td>
                         <td>

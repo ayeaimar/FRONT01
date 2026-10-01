@@ -51,6 +51,7 @@ export const ProductContextProvider = ({ children }) => {
         const cleanData = {
             name: data.name,
             description: data.description,
+            category: data.category,
             price: Number(data.price),
             stock: Number(data.stock),
             imageUrl: data.imageUrl,
@@ -87,24 +88,23 @@ export const ProductContextProvider = ({ children }) => {
     }, [])
 
     // Funcion para crear un producto
-    const createProduct = useCallback(async (data) => {
-        const cleanData = {
-            name: data.name,
-            description: data.description,
-            price: Number(data.price),
-            stock: Number(data.stock),
-            imageUrl: data.imageUrl,
-        }
-
+    const createProduct = useCallback(async (productData) => {
         try {
-            const response = await axios.post(API_URL, cleanData, {
+            const response = await axios.post(API_URL, productData, {
                 withCredentials: true,
+                ...(productData instanceof FormData && {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }),
             })
 
             if (response.status === 201) {
+                const createdProduct = response.data.product || response.data
+
                 setProducts((prevProducts) => [
                     ...prevProducts,
-                    response.data.product,
+                    createdProduct,
                 ])
 
                 return {

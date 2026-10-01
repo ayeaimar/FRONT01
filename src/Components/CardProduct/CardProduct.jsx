@@ -2,9 +2,10 @@ import { Link } from 'react-router'
 import { useUser } from '../../Context/UserContext'
 import { useCart } from '../../Context/CartContext'
 import { FaShoppingCart } from 'react-icons/fa'
+import FormattedPrice from '../FormattedPrice/FormattedPrice'
 
 const CardProduct = ({
-    product: { _id, name, imageUrl, description, price, stock },
+    product: { _id, name, imageUrl, description, category, price, stock },
 }) => {
     const { isAuthenticated } = useUser()
     const { addToCart, loading, openModal } = useCart()
@@ -25,24 +26,31 @@ const CardProduct = ({
             </figure>
             <div className="card-body">
                 <h2 className="card-title">{name}</h2>
-                <div className="badge badge-warning">{price}</div>
+                <span className="text-sm text-gray-500">
+                    {category || 'Taza'}
+                </span>
+                <div className="badge badge-warning">
+                    <FormattedPrice price={price} />
+                </div>
                 <p>{description}</p>
                 <div className="card-actions justify-between mt-4">
                     <Link
                         to={`/detailProduct/${_id}`}
                         className="btn btn-info btn-sm md:btn-md"
                     >
-                        Ver detaller
+                        Ver detalles
                     </Link>
 
-                    <button
-                        onClick={handleAddToCart}
-                        disabled={loading || stock === 0}
-                        className="btn btn-success btn-sm md:btn-md"
-                    >
-                        <FaShoppingCart size={16} />
-                        {stock === 0 ? 'Sin stock' : 'Agregar'}
-                    </button>
+                    {isAuthenticated() && (
+                        <button
+                            onClick={handleAddToCart}
+                            disabled={loading || stock === 0}
+                            className="btn btn-success btn-sm md:btn-md"
+                        >
+                            <FaShoppingCart size={16} />
+                            {stock === 0 ? 'Sin stock' : 'Agregar'}
+                        </button>
+                    )}
                 </div>
             </div>
         </div>

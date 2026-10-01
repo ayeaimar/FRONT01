@@ -1,5 +1,6 @@
 import ModalCart from './ModalCart'
 import { useCart } from '../../Context/CartContext'
+import FormattedPrice from '../FormattedPrice/FormattedPrice'
 
 const Cart = () => {
     const { total, itemsQuantity, openModal, isModalOpen } = useCart()
@@ -50,7 +51,7 @@ const Cart = () => {
                                 {itemsQuantity} items
                             </span>
                             <span className="text-info">
-                                Subtotal: ${total}
+                                Subtotal: <FormattedPrice price={total} />
                             </span>
                             <div className="card-actions">
                                 <button

@@ -1,4 +1,5 @@
 import { useUser } from '../../Context/UserContext'
+import { Link } from 'react-router'
 import toast from 'react-hot-toast'
 import { logoutService } from '../../services/authServices'
 const UserDropDown = () => {
@@ -31,16 +32,10 @@ const UserDropDown = () => {
             </div>
             <ul
                 tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow"
+                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1000] w-52 p-2 shadow"
             >
                 <li>
-                    <a className="justify-between">
-                        Perfil
-                        <span className="badge">Nuevo</span>
-                    </a>
-                </li>
-                <li>
-                    <a className="justify-between">Configuración</a>
+                    <Link to="/profile">Perfil</Link>
                 </li>
                 <li>
                     <a onClick={handleLogout} className="justify-between">

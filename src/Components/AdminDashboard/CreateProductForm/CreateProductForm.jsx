@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useProduct } from '../../../Context/ProductContext'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router'
 
 const CreateProductForm = () => {
+    const [file, setFile] = useState(null)
     const {
         register,
         handleSubmit,
@@ -16,7 +18,19 @@ const CreateProductForm = () => {
     const navigate = useNavigate()
 
     const onSubmit = async (data) => {
-        const result = await createProduct(data)
+        const formData = new FormData()
+        formData.append('name', data.name)
+        formData.append('description', data.description)
+        formData.append('price', data.price)
+        formData.append('stock', data.stock)
+        formData.append('category', data.category)
+        formData.append('imageUrl', file)
+
+        if (file) {
+            formData.append('imageUrl', file)
+        }
+
+        const result = await createProduct(formData)
 
         if (result.success) {
             toast.success(result.message)
@@ -66,8 +80,8 @@ const CreateProductForm = () => {
                     {...register('description', {
                         required: 'La descripción es requerida',
                         minLength: {
-                            value: 3,
-                            message: 'Mínimo 10 caracteres',
+                            value: 50,
+                            message: 'Mínimo 50 caracteres',
                         },
                         maxLength: {
                             value: 500,
@@ -87,6 +101,28 @@ const CreateProductForm = () => {
                 {errors.description && (
                     <p className="text-red-400 text-sm mt-2 ml-1">
                         {errors.description.message}
+                    </p>
+                )}
+            </div>
+            <div>
+                <select
+                    {...register('category', {
+                        required: 'La categoría es requerida',
+                    })}
+                    className={`p-2 outline-2 rounded border focus:outline-primary w-full ${
+                        errors.category
+                            ? 'border-red-500 outline-red-500 focus:outline-red-500'
+                            : ''
+                    }`}
+                    defaultValue=""
+                >
+                    <option value="">Seleccionar categoría</option>
+                    <option value="Indumentaria">Indumentaria</option>
+                    <option value="Taza">Taza</option>
+                </select>
+                {errors.category && (
+                    <p className="text-red-400 text-sm mt-2 ml-1">
+                        {errors.category.message}
                     </p>
                 )}
             </div>
@@ -142,25 +178,16 @@ const CreateProductForm = () => {
                 )}
             </div>
             <div>
+                <label className="text-sm font-semibold">
+                    Imagen del producto:
+                </label>
                 <input
-                    {...register('imageUrl', {
-                        required: 'La url de la imagen es requerida',
-                    })}
-                    className={`p-2 outline-2 rounded border focus:outline-primary w-full ${
-                        errors.imageUrl
-                            ? 'border-red-500 outline-red-500 focus:outline-red-500'
-                            : ''
-                    }`}
-                    type="text"
-                    placeholder="Imagen"
-                    name="imageUrl"
-                    autoComplete="imageUrl"
+                    type="file"
+                    accept="image/*"
+                    onChange={(event) => setFile(event.target.files?.[0] || null)}
+                    required
+                    className="border p-2 rounded w-full"
                 />
-                {errors.imageUrl && (
-                    <p className="text-red-400 text-sm mt-2 ml-1">
-                        {errors.imageUrl.message}
-                    </p>
-                )}
             </div>
 
             <button className="btn btn-primary" type="submit">

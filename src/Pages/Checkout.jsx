@@ -5,6 +5,7 @@ import { useUser } from '../Context/UserContext'
 import { createOrder } from '../services/orderServices'
 import { useNavigate } from 'react-router'
 import toast from 'react-hot-toast'
+import FormattedPrice from '../Components/FormattedPrice/FormattedPrice'
 
 const Checkout = () => {
     const { cart, total, clearCart, loading: cartLoading } = useCart()
@@ -460,7 +461,11 @@ const Checkout = () => {
                                     </div>
                                 </div>
                                 <span className="font-semibold">
-                                    ${item.price * (item.quantity || 1)}
+                                    <FormattedPrice
+                                        price={
+                                            item.price * (item.quantity || 1)
+                                        }
+                                    />
                                 </span>
                             </div>
                         ))}
@@ -468,7 +473,7 @@ const Checkout = () => {
                         <div className="border-t pt-4">
                             <div className="flex justify-between items-center text-xl font-bold">
                                 <span>Total:</span>
-                                <span>${total}</span>
+                                <FormattedPrice price={total} />
                             </div>
                         </div>
                     </div>

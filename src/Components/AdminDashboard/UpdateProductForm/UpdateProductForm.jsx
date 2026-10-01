@@ -89,6 +89,27 @@ const UpdateProductForm = ({ product }) => {
                 )}
             </div>
             <div>
+                <select
+                    {...register('category', {
+                        required: 'La categoría es requerida',
+                    })}
+                    className={`p-2 outline-2 rounded border focus:outline-primary w-full ${
+                        errors.category
+                            ? 'border-red-500 outline-red-500 focus:outline-red-500'
+                            : ''
+                    }`}
+                >
+                    <option value="">Seleccionar categoría</option>
+                    <option value="Indumentaria">Indumentaria</option>
+                    <option value="Taza">Taza</option>
+                </select>
+                {errors.category && (
+                    <p className="text-red-400 text-sm mt-2 ml-1">
+                        {errors.category.message}
+                    </p>
+                )}
+            </div>
+            <div>
                 <input
                     {...register('price', {
                         required: 'El precio es requerido',

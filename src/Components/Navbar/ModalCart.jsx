@@ -1,8 +1,8 @@
 import { CgTrash } from 'react-icons/cg'
 import { FaMinus, FaPlus } from 'react-icons/fa'
 import { useCart } from '../../Context/CartContext'
-import { useUser } from '../../Context/UserContext'
 import { Link } from 'react-router'
+import FormattedPrice from '../FormattedPrice/FormattedPrice'
 
 const ModalCart = () => {
     const {
@@ -62,7 +62,9 @@ const ModalCart = () => {
                                                 {item.name}
                                             </h4>
                                             <p className="text-sm text-gray-600">
-                                                {item.price}
+                                                <FormattedPrice
+                                                    price={item.price}
+                                                />
                                             </p>
                                         </div>
 
@@ -109,7 +111,12 @@ const ModalCart = () => {
 
                                             {/* Precio subtotal */}
                                             <span className="font-semibold text-lg">
-                                                ${item.price * item.quantity}
+                                                <FormattedPrice
+                                                    price={
+                                                        item.price *
+                                                        item.quantity
+                                                    }
+                                                />
                                             </span>
 
                                             {/* Boton eliminar */}
@@ -141,7 +148,7 @@ const ModalCart = () => {
 
                             <div className="flex justify-between items-center text-lg font-bold">
                                 <span>Total:</span>
-                                <span>${total}</span>
+                                <FormattedPrice price={total} />
                             </div>
                         </div>
 
