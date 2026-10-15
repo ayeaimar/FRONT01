@@ -27,10 +27,10 @@ const RegisterForm = () => {
             checkSession
         )
 
-        if (result.message) {
-            toast.success('Registro exitoso')
+        if (result.success) {
+            toast.success(result.message)
         } else {
-            toast.error('Error intente más tarde')
+            toast.error(result.message)
         }
     }
 

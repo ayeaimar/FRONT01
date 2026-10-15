@@ -61,12 +61,21 @@ export const registerService = async (
             setRedirect(true)
 
             return {
-                message: true,
+                success: true,
+                message: response.data.message || 'Registro exitoso',
             }
+        }
+
+        return {
+            success: false,
+            message: 'No se pudo completar el registro',
         }
     } catch (error) {
         return {
-            message: false,
+            success: false,
+            message:
+                error.response?.data?.message ||
+                'No se pudo completar el registro',
         }
     }
 }
