@@ -113,10 +113,14 @@ export const ProductContextProvider = ({ children }) => {
                 }
             }
         } catch (error) {
-            setError(error.message || 'Error al crear el producto')
+            const message =
+                error.response?.data?.message ||
+                error.message ||
+                'Error al crear el producto'
+            setError(message)
             return {
                 success: false,
-                message: error.message || 'Error al crear el producto',
+                message,
             }
         } finally {
             setProductLoading(false)

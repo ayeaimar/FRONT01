@@ -24,10 +24,9 @@ const CreateProductForm = () => {
         formData.append('price', data.price)
         formData.append('stock', data.stock)
         formData.append('category', data.category)
-        formData.append('imageUrl', file)
 
         if (file) {
-            formData.append('imageUrl', file)
+            formData.append('image', file)
         }
 
         const result = await createProduct(formData)
