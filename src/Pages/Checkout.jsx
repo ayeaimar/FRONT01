@@ -74,11 +74,16 @@ const Checkout = () => {
                 },
             }
 
-            const response = await createOrder(orderData)
+            const orderResponse = await createOrder(orderData)
 
-            console.log(response)
+            console.log(orderResponse)
 
-            if (response.success && response.paymentUrl) {
+            const paymentUrl =
+                orderResponse.paymentUrl ||
+                orderResponse.sandbox_init_point ||
+                orderResponse.init_point
+
+            if (paymentUrl) {
                 // Mostrar mensaje de éxito
                 toast.success(
                     'Orden creada con éxito. Redirigiendo a Mercado Pago...'
@@ -88,7 +93,7 @@ const Checkout = () => {
                 sessionStorage.setItem('checkoutCart', JSON.stringify(cart))
 
                 // Limpiar la URL de posibles espacios en blanco
-                const cleanUrl = response.paymentUrl.trim()
+                const cleanUrl = paymentUrl.trim()
                 
                 // Redirigir a Mercado Pago después de un breve delay
                 setTimeout(() => {
@@ -459,7 +464,7 @@ const Checkout = () => {
                                             Cantidad: {item.quantity || 1}
                                         </p>
                                     </div>
-                                </div>
+                                </div>-
                                 <span className="font-semibold">
                                     <FormattedPrice
                                         price={
